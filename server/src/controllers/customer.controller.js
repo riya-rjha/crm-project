@@ -13,14 +13,28 @@ router.post("/", async (req, res) => {
             name, expenditure, visits, activeDays
         });
         const savedCustomer = await newCustomer.save();
+        const allCustomers = await customerModel.find();
         return res.status(201).json(
             {
                 message: "Customer added",
-                customer: savedCustomer
+                customerAdded: savedCustomer,
+                allCustomers: allCustomers,
             });
     } catch (error) {
         return res.status(500).json("Customer could not be added");
     }
 });
+
+router.get("/", async (_, res) => {
+    try {
+        const customers = await customerModel.find();
+        return res.status(200).json({ customers: customers });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to fetch customers",
+            error: error.message
+        })
+    }
+})
 
 export default router;
