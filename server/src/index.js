@@ -1,0 +1,27 @@
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import "dotenv/config";
+import customerRoute from "./routes/customer.route.js"
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+const PORT = process.env.PORT || 3000;
+
+app.use("/api", customerRoute);
+
+const connectToDatabase = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_DB_URL);
+    console.log("Connected to database");
+  } catch (err) {
+    console.log(err.message);
+  }
+  app.listen(PORT || 8000, () => {
+    console.log(`Successfully connected to PORT`);
+  });
+};
+
+connectToDatabase();
