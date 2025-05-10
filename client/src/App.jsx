@@ -6,7 +6,7 @@ const App = () => {
       <div className="landing-page">
         <nav>
           <div className="left">
-            <p id="tag">Xeno</p>
+            <p id="tag">CRM</p>
             <div className="tags">
               <ul>
                 <li>Home</li>
@@ -23,7 +23,9 @@ const App = () => {
 
         <div className="hero">
           <div className="left-hero">
-            <h1>Presenting The Next-Gen CRM Platform</h1>
+            <h1>
+              Presenting The Next-Gen <span>CRM Platform</span>
+            </h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
               laborum eveniet sunt similique ea nam consequuntur praesentium.
@@ -32,7 +34,11 @@ const App = () => {
             <button>Authenticate</button>
           </div>
           <div className="right-hero">
-            <img src="" alt="" width={400} />
+            <img
+              src="https://plus.unsplash.com/premium_photo-1683865775631-3283bfaf6508?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3VzdG9tZXJ8ZW58MHx8MHx8fDA%3D"
+              alt=""
+              width={400}
+            />
           </div>
         </div>
 
