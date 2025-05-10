@@ -1,35 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <div className="landing-page">
+        <nav>
+          <div className="left">
+            <p id="tag">Xeno</p>
+            <div className="tags">
+              <ul>
+                <li>Home</li>
+                <li>About Us</li>
+                <li>Pricing</li>
+                <li>Features</li>
+              </ul>
+            </div>
+          </div>
+          <div className="right">
+            <button>Signup</button>
+          </div>
+        </nav>
 
-export default App
+        <div className="hero">
+          <div className="left-hero">
+            <h1>Presenting The Next-Gen CRM Platform</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
+              laborum eveniet sunt similique ea nam consequuntur praesentium.
+              Necessitatibus, sunt labore?
+            </p>
+            <button>Authenticate</button>
+          </div>
+          <div className="right-hero">
+            <img src="" alt="" width={400} />
+          </div>
+        </div>
+
+        <div className="stats">
+          <div className="customers">
+            <div className="data">
+              <h1>200+</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Exercitationem, tenetur.
+              </p>
+            </div>
+          </div>
+          <div className="campaigns">
+            <div className="data">
+              <h1>200+</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Exercitationem, tenetur.
+              </p>
+            </div>
+          </div>
+          <div className="segments">
+            <div className="data">
+              <h1>40+</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Exercitationem, tenetur.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;

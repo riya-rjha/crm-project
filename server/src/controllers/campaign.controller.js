@@ -8,25 +8,34 @@ router.post("/", async (req, res) => {
     try {
         const { rules, operator1, operator2, message, customerIDs } = req.body;
         let customers = await customerModel.find();
-        rules.forEach(async rule => {
+        for (let rule of rules) {
             let field = rule.field;
             let operator = rule.operator;
             let value = rule.value;
+
             if (operator === 'lt') {
-                customers = await customerModel.find({
-                    [field]: { $lt: value }
-                });
-            }
-            else if (operator == 'gt') {
-                customers = await customerModel.find({
-                    [field]: { $gt: value }
-                });
+                customers = await customerModel.find(
+                    {
+                        [field]: { $lt: value }
+                    }
+                );
+            } else if (operator === 'gt') {
+                customers = await customerModel.find(
+                    {
+                        [field]: { $gt: value }
+                    }
+                );
             } else {
-                customers = await customerModel.find({
-                    [field]: { $eq: value }
-                });
+                customers = await customerModel.find(
+                    {
+                        [field]: { $eq: value }
+                    }
+                );
             }
-        });
+        }
+
+        const filteredCustomerIDs = customers.map(customer => customer._id);
+
         // console.log(customers)
         const newCampaign = new campaignModel({
             rules, operator1, operator2, message,
@@ -37,6 +46,7 @@ router.post("/", async (req, res) => {
             message: "Campaign successfully added",
             campaigns: newCampaign,
             customers: customers,
+            filteredCustomerIDs: filteredCustomerIDs
         })
     } catch (error) {
         console.log("Err: " + error.message);
