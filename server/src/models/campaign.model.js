@@ -1,34 +1,50 @@
 import mongoose from "mongoose";
 
+const ruleSchema = new mongoose.Schema(
+    {
+        field: {
+            type: String,
+            required: true,
+        },
+        operator: {
+            type: String,
+            required: true,
+        },
+        value: {
+            type: Number,
+            required: true,
+        }
+    }
+);
+
 const campaignSchema = new mongoose.Schema({
-    rules: {
-        expenditure: Number,
-        visits: Number,
-        activeDays: Number,
+    rules: [ruleSchema],
+    operator1: {
+        type: String,
+        default: "AND"
+    },
+    operator2: {
+        type: String,
+        default: "AND"
     },
     message: {
         type: String,
         required: true,
     },
-    customerIDs: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Customer",
-        },
-    ],
-    totSize: {
-        type: Number,
+    customerIDs: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Customer",
+            },
+        ],
+        required: true,
     },
-    deliverySuccess: {
-        type: Number,
-    },
-    deliveryFailure: {
-        type: Number,
-    },
-},
-    {
-        timestamps: true,
-    }
-);
+    totSize: Number,
+    deliverySuccess: Number,
+    deliveryFailure: Number,
+}, {
+    timestamps: true,
+});
 
 export default mongoose.model("Campaign", campaignSchema);
