@@ -4,9 +4,9 @@ import axios from "axios";
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [name, setName] = useState("");
-  const [expenditure, setExpenditure] = useState(0);
-  const [visits, setVisits] = useState(0);
-  const [activeDays, setActiveDays] = useState(0);
+  const [expenditure, setExpenditure] = useState();
+  const [visits, setVisits] = useState();
+  const [activeDays, setActiveDays] = useState();
 
   useEffect(() => {
     const getCustomers = async () => {
@@ -36,40 +36,40 @@ const Customers = () => {
   return (
     <div className="customer">
       <form action="">
-        <label htmlFor="name" id="name">
-          Name:{" "}
-        </label>
+        <label htmlFor="name">Name: </label>
         <input
+          id="name"
           type="text"
+          placeholder="Enter name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="expenditure" id="expenditure">
-          Expenditure:{" "}
-        </label>
+        <label htmlFor="expenditure">Expenditure: </label>
         <input
+          placeholder="Enter expenditure"
           type="number"
+          id="expenditure"
           value={expenditure}
           onChange={(e) => setExpenditure(e.target.value)}
         />
-        <label htmlFor="active" id="active">
-          Active Days:{" "}
-        </label>
+        <label htmlFor="active">Active Days: </label>
         <input
+          id="active"
+          placeholder="Enter active days"
           type="number"
           value={activeDays}
           onChange={(e) => setActiveDays(e.target.value)}
         />
-        <label htmlFor="visits" id="visits">
-          Visits:{" "}
-        </label>
+        <label htmlFor="visits">Visits: </label>
         <input
+          id="visits"
+          placeholder="Enter visits"
           type="number"
           value={visits}
           onChange={(e) => setVisits(e.target.value)}
         />
         <button onClick={handleSubmit} className="customer-submit">
-          Submit
+          Add
         </button>
       </form>
       <h2 className="customer-heading">Customers</h2>

@@ -64,7 +64,8 @@ ul li a:hover {
 
 .right button,
 .left-hero button,
-.customer-submit {
+.customer-submit,
+.submit-btn {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   background-color: rgb(0, 0, 155);
@@ -79,7 +80,8 @@ ul li a:hover {
 
 .right button:hover,
 .left-hero button:hover,
-.customer-submit:hover {
+.customer-submit:hover,
+.submit-btn:hover {
   background-color: rgb(0, 0, 200);
   transform: scale(1.05);
 }
@@ -163,13 +165,15 @@ ul li a:hover {
   margin-bottom: 1.5rem;
 }
 
-.customer-grid {
+.customer-grid,
+.campaign-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
-.card {
+.card,
+.campaign-card {
   background-color: #dbdcff8b;
   padding: 1.5rem;
   color: rgb(0, 0, 95);
@@ -209,4 +213,94 @@ form input {
   border: 1px solid #ccc;
   outline: none;
   width: 10rem;
+}
+
+.campaigns {
+  margin: 1rem;
+}
+
+.segments {
+  width: 100%;
+}
+
+.segment-heading,
+.campaign-heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.segment-hz-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.segment-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+}
+
+.label-text {
+  width: 120px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.input-value,
+.select-condition {
+  flex: 1;
+}
+
+.input-value {
+  padding: 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.select-condition {
+  background-color: rgb(0, 0, 86);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.select-logic {
+  background-color: rgb(0, 0, 86);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  min-width: 100px;
+}
+
+.submit-btn {
+  width: 6.2rem;
+  background-color: rgb(0, 0, 86);
+}
+
+.campaign-heading {
+  font-size: 2rem;
+  text-decoration: underline;
+}
+
+.campaign-card {
+  font-size: 1rem;
+}
+
+.campaign-ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  display: block;
+}
+
+
+.campaign-card p{
+  margin-bottom: .3rem;
+  font-size: 16px;
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Customers from "./pages/Customers";
 import Navbar from "./components/Navbar";
+import Campaigns from "./pages/Campaigns";
 
 const App = () => {
   return (
@@ -69,7 +70,7 @@ const App = () => {
             }
           />
           <Route path="/customers" element={<Customers />} />
-          <Route path="/campaigns" element={<div />} />
+          <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/segments" element={<div />} />
           <Route path="/auth" element={<div />} />
         </Routes>
