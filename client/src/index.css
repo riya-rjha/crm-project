@@ -28,6 +28,18 @@ ul {
   gap: 1.5rem;
   font-weight: 500;
   font-size: 1rem;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li a {
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #tag {
@@ -51,21 +63,23 @@ ul {
 }
 
 .right button,
-.left-hero button {
+.left-hero button,
+.customer-submit {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   background-color: rgb(0, 0, 155);
   color: white;
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .right button:hover,
-.left-hero button:hover {
+.left-hero button:hover,
+.customer-submit:hover {
   background-color: rgb(0, 0, 200);
   transform: scale(1.05);
 }
@@ -115,8 +129,8 @@ ul {
   justify-content: center;
   align-items: flex-start;
   gap: 3rem;
-  padding: 2rem;
   background-color: #f5f5ff;
+  padding-top: 1rem;
 }
 
 .stats .data {
@@ -138,4 +152,61 @@ ul {
 
 .left-hero h1 span {
   color: rgb(0, 0, 155);
+}
+
+.customer {
+  margin: 3rem;
+}
+
+.customer-heading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.customer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: #dbdcff8b;
+  padding: 1.5rem;
+  color: rgb(0, 0, 95);
+  border-radius: 10px;
+  transition: all 450ms;
+}
+
+.card:hover {
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.customer-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #f5f5f5;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+form label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+form input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 10rem;
 }
