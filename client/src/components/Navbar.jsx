@@ -18,7 +18,7 @@ const Navbar = () => {
               <Link to="/campaigns">Campaigns</Link>
             </li>
             <li>
-              <Link to="/segments">Segments</Link>
+              <Link to="/stats">Statistics</Link>
             </li>
           </ul>
         </div>

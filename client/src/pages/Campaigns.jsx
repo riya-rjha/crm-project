@@ -3,14 +3,35 @@ import axios from "axios";
 
 const Campaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [expenditure, setExpenditure] = useState("");
+  const [expenditureOp, setExpenditureOp] = useState("gt");
+  const [visits, setVisits] = useState("");
+  const [visitsOp, setVisitsOp] = useState("gt");
+  const [activeDays, setActiveDays] = useState("");
+  const [activeDaysOp, setActiveDaysOp] = useState("gt");
+  const [op1, setOp1] = useState("AND");
+  const [op2, setOp2] = useState("AND");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
+    const getCustomers = async () => {
+      try {
+        const res = await axios.get("http://localhost:3100/api/customer");
+        setCustomers(res.data.allCustomers);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     const getCampaigns = async () => {
       const res = await axios.get("http://localhost:3100/api/campaign");
-      console.log(res);
+      //   console.log(res);
       setCampaigns(res.data.campaigns);
     };
+
     getCampaigns();
+    getCustomers();
   }, []);
 
   const getQuery = (operator) => {
@@ -19,6 +40,78 @@ const Campaigns = () => {
     } else if (operator == "$lt") {
       return " lesser than ";
     } else return " equal to ";
+  };
+
+  const getQueryLogic = (field, operator, value) => {
+    if (operator == "gt") {
+      return field > value;
+    } else if (operator == "lt") {
+      return field < value;
+    }
+    return field == value;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let rules = [];
+
+    if (expenditure !== null && expenditure !== undefined && expenditure != 0) {
+      rules.push({
+        field: "expenditure",
+        operator: expenditureOp,
+        value: Number(expenditure),
+      });
+    }
+
+    if (activeDays !== null && activeDays !== undefined && activeDays != 0) {
+      rules.push({
+        field: "activeDays",
+        operator: activeDaysOp,
+        value: Number(activeDays),
+      });
+    }
+
+    if (visits !== null && visits !== undefined && visits != 0) {
+      rules.push({
+        field: "visits",
+        operator: visitsOp,
+        value: Number(visits),
+      });
+    }
+
+    console.log(rules);
+
+    let filteredCustomers = [];
+    let filteredCustomerIDs = [];
+
+    customers.map((customer) => {
+      rules.map((rule) => {
+        if (rules.length == 1) {
+          const isCheck = getQueryLogic(
+            customer[rule.field],
+            rule.operator,
+            rule.value
+          );
+          if (isCheck) {
+            filteredCustomerIDs.push(customer._id);
+          }
+        } else if (rules.length == 2) {
+          //   Apply operator logic - 1 condition
+        } else {
+          //   Apply operator logic - 4 conditions
+        }
+      });
+    });
+
+    console.log(filteredCustomerIDs);
+
+    let payload = {
+      rules,
+      operator1: op1,
+      operator2: op2,
+      message,
+      filteredCustomerIDs,
+    };
   };
 
   return (
@@ -35,15 +128,27 @@ const Campaigns = () => {
               type="number"
               className="input-value"
               placeholder="Value"
+              value={expenditure}
+              onChange={(e) => setExpenditure(e.target.value)}
             />
-            <select className="select-condition">
-              <option value=">">Greater Than</option>
-              <option value="<">Less Than</option>
-              <option value="=">Equal To</option>
+            <select
+              className="select-condition"
+              value={expenditureOp}
+              onChange={(e) => {
+                setExpenditureOp(e.target.value);
+              }}
+            >
+              <option value="gt">Greater Than</option>
+              <option value="lt">Less Than</option>
+              <option value="eq">Equal To</option>
             </select>
           </div>
           <div className="logic-row">
-            <select className="select-logic">
+            <select
+              className="select-logic"
+              value={op1}
+              onChange={(e) => setOp1(e.target.value)}
+            >
               <option value="AND">AND</option>
               <option value="OR">OR</option>
             </select>
@@ -60,15 +165,27 @@ const Campaigns = () => {
               type="number"
               className="input-value"
               placeholder="Value"
+              value={activeDays}
+              onChange={(e) => setActiveDays(e.target.value)}
             />
-            <select className="select-condition">
-              <option value=">">Greater Than</option>
-              <option value="<">Less Than</option>
-              <option value="=">Equal To</option>
+            <select
+              className="select-condition"
+              value={activeDaysOp}
+              onChange={(e) => {
+                setActiveDaysOp(e.target.value);
+              }}
+            >
+              <option value="gt">Greater Than</option>
+              <option value="lt">Less Than</option>
+              <option value="eq">Equal To</option>
             </select>
           </div>
           <div className="logic-row">
-            <select className="select-logic">
+            <select
+              className="select-logic"
+              value={op2}
+              onChange={(e) => setOp2(e.target.value)}
+            >
               <option value="AND">AND</option>
               <option value="OR">OR</option>
             </select>
@@ -85,14 +202,41 @@ const Campaigns = () => {
               type="number"
               className="input-value"
               placeholder="Value"
+              value={visits}
+              onChange={(e) => setVisits(e.target.value)}
             />
-            <select className="select-condition">
-              <option value=">">Greater Than</option>
-              <option value="<">Less Than</option>
-              <option value="=">Equal To</option>
+            <select
+              style={{
+                minWidth: 0,
+                width: "18rem",
+              }}
+              className="select-condition"
+              value={visitsOp}
+              onChange={(e) => {
+                setVisitsOp(e.target.value);
+              }}
+            >
+              <option value="gt">Greater Than</option>
+              <option value="lt">Less Than</option>
+              <option value="eq">Equal To</option>
             </select>
           </div>
-          <button className="submit-btn">Submit</button>
+        </div>
+        <div className="message-submit-row">
+          <label htmlFor="message-label" className="label-text">
+            Message:
+          </label>
+          <input
+            id="message-label"
+            type="text"
+            className="input-value"
+            placeholder="Enter message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button onClick={(e) => handleSubmit(e)} className="submit-btn">
+            Submit
+          </button>
         </div>
       </div>
       <div className="all-campaigns">
