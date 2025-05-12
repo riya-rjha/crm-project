@@ -35,7 +35,8 @@ const Statistics = () => {
         sent,
         fail,
       });
-      setMessage(message.summary);
+      // console.log(message);
+      setMessage(message.data.summary);
     };
 
     getReceipts();
@@ -78,7 +79,10 @@ const Statistics = () => {
         <>
           <div className="pie-chart">
             <Pie className="pie-set" data={data} options={options} />
-            <p>{message}</p>
+            <div className="insight-summary">
+              <h3>AI Generated Summary Insights: </h3>
+              <p>{message}</p>
+            </div>
           </div>
           <table className="statistics-table">
             <thead>

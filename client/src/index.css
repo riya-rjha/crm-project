@@ -125,7 +125,8 @@ ul li a:hover {
   height: auto;
 }
 
-.stats, .stats-home {
+.stats,
+.stats-home {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -360,8 +361,10 @@ form input {
   flex-direction: column;
 }
 
-.statistics-heading{
+.statistics-heading {
   margin-bottom: 1rem;
+  text-align: center;
+  text-decoration: underline;
 }
 
 .statistics-table {
@@ -377,13 +380,29 @@ form input {
   background-color: rgb(233, 233, 255);
 }
 
-.pie-chart .pie-set{
-  max-width: 400px;
-  max-height: 400px;
-  margin: 0 auto;
+.pie-chart {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 40px;
+  text-align: left;
+  padding: 20px;
+  flex-wrap: wrap;
 }
 
-.pie-chart{
-  display: flex;
-  align-items: center;
+.pie-set {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.insight-summary {
+  max-width: 300px;
+}
+
+.insight-summary h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-decoration: underline;
+  margin-bottom: 10px;
 }
