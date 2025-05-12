@@ -35,9 +35,9 @@ const Campaigns = () => {
   }, []);
 
   const getQuery = (operator) => {
-    if (operator == "$gt") {
+    if (operator == "gt") {
       return " greater than ";
-    } else if (operator == "$lt") {
+    } else if (operator == "lt") {
       return " lesser than ";
     } else return " equal to ";
   };
@@ -51,10 +51,7 @@ const Campaigns = () => {
     return field == value;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let rules = [];
-
+  const calculateRules = (rules) => {
     if (expenditure !== null && expenditure !== undefined && expenditure != 0) {
       rules.push({
         field: "expenditure",
@@ -79,39 +76,122 @@ const Campaigns = () => {
       });
     }
 
-    console.log(rules);
+    // console.log(rules);
+  };
 
-    let filteredCustomers = [];
-    let filteredCustomerIDs = [];
+  const calculateFilteredCustomers = (
+    rules,
+    filteredCustomerIDs,
+    filteredCustomers
+  ) => {
+    calculateRules(rules);
 
     customers.map((customer) => {
-      rules.map((rule) => {
-        if (rules.length == 1) {
-          const isCheck = getQueryLogic(
+      if (rules.length == 1) {
+        let isCheck;
+        rules.map((rule) => {
+          isCheck = getQueryLogic(
             customer[rule.field],
             rule.operator,
             rule.value
           );
-          if (isCheck) {
-            filteredCustomerIDs.push(customer._id);
-          }
-        } else if (rules.length == 2) {
-          //   Apply operator logic - 1 condition
-        } else {
-          //   Apply operator logic - 4 conditions
+        });
+        if (isCheck) {
+          filteredCustomerIDs.push(customer._id);
+          filteredCustomers.push(customer.name);
         }
-      });
+      } else if (rules.length == 2) {
+        //   Apply operator logic - 1 condition
+        const [rule1, rule2] = rules;
+        const isCheckFirst = getQueryLogic(
+          customer[rule1.field],
+          rule1.operator,
+          rule1.value
+        );
+        const isCheckSecond = getQueryLogic(
+          customer[rule2.field],
+          rule2.operator,
+          rule2.value
+        );
+        const isCheck =
+          op1 === "AND"
+            ? isCheckFirst && isCheckSecond
+            : isCheckFirst || isCheckSecond;
+        if (isCheck) {
+          filteredCustomerIDs.push(customer._id);
+          filteredCustomers.push(customer.name);
+        }
+      } else if (rules.length == 3) {
+        //   Apply operator logic - 4 conditions
+        const [rule1, rule2, rule3] = rules;
+
+        const isCheckFirst = getQueryLogic(
+          customer[rule1.field],
+          rule1.operator,
+          rule1.value
+        );
+        const isCheckSecond = getQueryLogic(
+          customer[rule2.field],
+          rule2.operator,
+          rule2.value
+        );
+        const isCheckThird = getQueryLogic(
+          customer[rule3.field],
+          rule3.operator,
+          rule3.value
+        );
+
+        let isCheck;
+        if (op1 === "AND" && op2 === "AND") {
+          isCheck = isCheckFirst && isCheckSecond && isCheckThird;
+        } else if (op1 === "AND" && op2 === "OR") {
+          isCheck = (isCheckFirst && isCheckSecond) || isCheckThird;
+        } else if (op1 === "OR" && op2 === "AND") {
+          isCheck = isCheckFirst || (isCheckSecond && isCheckThird);
+        } else {
+          isCheck = isCheckFirst || isCheckSecond || isCheckThird;
+        }
+
+        if (isCheck) {
+          filteredCustomerIDs.push(customer._id);
+          filteredCustomers.push(customer.name);
+        }
+      } else {
+        filteredCustomerIDs.push(customer._id);
+      }
     });
+  };
+
+  const handleSubmit = async () => {
+    let filteredCustomerIDs = [];
+    let filteredCustomers = [];
+    let rules = [];
+
+    calculateFilteredCustomers(rules, filteredCustomerIDs, filteredCustomers);
 
     console.log(filteredCustomerIDs);
+    // console.log(filteredCustomers);
+    // console.log(rules);
+
+    console.log(filteredCustomerIDs.length);
+    let size = filteredCustomerIDs.length;
 
     let payload = {
       rules,
       operator1: op1,
       operator2: op2,
       message,
-      filteredCustomerIDs,
+      customerIDs: filteredCustomerIDs,
+      totSize: size,
     };
+
+    try {
+      await axios.post("http://localhost:3100/api/campaign", payload);
+    } catch (error) {
+      console.log("Enter all fields, including message");
+      console.log(error.message);
+    }
+    window.location.reload();
   };
 
   return (
@@ -233,8 +313,9 @@ const Campaigns = () => {
             placeholder="Enter message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            required
           />
-          <button onClick={(e) => handleSubmit(e)} className="submit-btn">
+          <button onClick={handleSubmit} type="submit" className="submit-btn">
             Submit
           </button>
         </div>
@@ -250,27 +331,37 @@ const Campaigns = () => {
               </p>
               <p>
                 <span style={{ fontWeight: 600 }}>Audience Size: </span>
-                {campaign.customerIDs.length}
+                {campaign.totSize}
               </p>
-              <p style={{ fontWeight: 600 }}>Rules: </p>
-              <ul
-                className="campaign-ul"
-                style={{ listStyleType: "disc", paddingLeft: "20px" }}
-              >
-                {campaign.rules.map((rule, idx) => (
-                  <li>
-                    <span style={{ fontWeight: 600 }}>
-                      {rule.field.charAt(0).toUpperCase() + rule.field.slice(1)}{" "}
-                    </span>
-                    {getQuery(rule.operator)} {rule.value}
-                    {idx === 0 && campaign.rules.length > 1 ? (
-                      <span> {campaign.operator1}</span>
-                    ) : campaign.rules.length >= 3 ? (
-                      <span> {campaign.operator2}</span>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
+              {campaign.rules.length == 0 ? (
+                <p>
+                  <span style={{ fontWeight: 600 }}>Rules: </span>Not Applicable
+                </p>
+              ) : (
+                <>
+                  <p style={{ fontWeight: 600 }}>Rules: </p>
+                  <ul
+                    className="campaign-ul"
+                    style={{ listStyleType: "disc", paddingLeft: "20px" }}
+                  >
+                    {campaign.rules.map((rule, idx) => (
+                      <li>
+                        <span style={{ fontWeight: 600 }}>
+                          {rule.field.charAt(0).toUpperCase() +
+                            rule.field.slice(1)}{" "}
+                        </span>
+                        {getQuery(rule.operator)} {rule.value}
+                        {idx === 0 && campaign.rules.length > 1 ? (
+                          <span> {campaign.operator1}</span>
+                        ) : campaign.rules.length >= 3 ? (
+                          <span> {campaign.operator2}</span>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
               <p style={{ marginTop: ".3rem" }}>
                 <span style={{ fontWeight: 600 }}>Message Sent: </span>{" "}
                 {campaign.message}

@@ -258,7 +258,7 @@ form input {
 }
 
 .input-value {
-  padding: 8px 12px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   flex: 1;
@@ -266,7 +266,7 @@ form input {
 }
 
 .select-condition {
-  padding: 8px 12px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #fff;
@@ -278,7 +278,7 @@ form input {
 }
 
 .select-logic {
-  padding: 8px 12px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #0c1f79;
@@ -294,7 +294,7 @@ form input {
 }
 
 .submit-btn {
-  padding: 8px 20px;
+  padding: 12px 20px;
   background-color: #0c1f79;
   color: white;
   border: none;
@@ -327,6 +327,7 @@ form input {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
 }
 
 .campaign-ul {
@@ -334,6 +335,6 @@ form input {
   display: block;
 }
 
-.campaigns label{
+.campaigns label {
   font-weight: 600;
 }
