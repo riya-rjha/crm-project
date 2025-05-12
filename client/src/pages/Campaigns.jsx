@@ -13,6 +13,8 @@ const Campaigns = () => {
   const [op1, setOp1] = useState("AND");
   const [op2, setOp2] = useState("AND");
   const [message, setMessage] = useState("");
+  const [previewSize, setPreviewSize] = useState();
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const getCustomers = async () => {
@@ -175,6 +177,7 @@ const Campaigns = () => {
 
     console.log(filteredCustomerIDs.length);
     let size = filteredCustomerIDs.length;
+    setPreviewSize(size);
 
     let payload = {
       rules,
@@ -187,11 +190,14 @@ const Campaigns = () => {
 
     try {
       await axios.post("http://localhost:3100/api/campaign", payload);
+      setShowPopup(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (error) {
       console.log("Enter all fields, including message");
       console.log(error.message);
     }
-    window.location.reload();
   };
 
   return (
@@ -370,6 +376,12 @@ const Campaigns = () => {
           ))}
         </div>
       </div>
+      {showPopup && (
+        <div className="popup">
+          <p>Previewing Size: (Redirecting in 3 seconds)</p>
+          Campaign sent to {previewSize} users!
+        </div>
+      )}
     </div>
   );
 };
