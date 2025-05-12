@@ -3,7 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import customerRoute from "./routes/customer.route.js";
-import campaignRoute from "./routes/campaign.route.js"
+import campaignRoute from "./routes/campaign.route.js";
+import deliveryReceiptRoute from "./routes/deliveryreceipt.route.js"
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/api", customerRoute);
 app.use("/api", campaignRoute);
+app.use("/api", deliveryReceiptRoute);
 
 const connectToDatabase = async () => {
   try {
