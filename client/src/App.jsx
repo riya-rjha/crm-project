@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Customers from "./pages/Customers";
 import Navbar from "./components/Navbar";
 import Campaigns from "./pages/Campaigns";
+import Statistics from "./pages/Statistics";
 
 const App = () => {
   return (
@@ -37,7 +38,7 @@ const App = () => {
                   </div>
                 </div>
 
-                <div className="stats">
+                <div className="stats-home">
                   <div className="customers">
                     <div className="data">
                       <h1>200+</h1>
@@ -56,7 +57,7 @@ const App = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="segments">
+                  <div className="segments-home">
                     <div className="data">
                       <h1>40+</h1>
                       <p>
@@ -71,7 +72,7 @@ const App = () => {
           />
           <Route path="/customers" element={<Customers />} />
           <Route path="/campaigns" element={<Campaigns />} />
-          <Route path="/stats" element={<div />} />
+          <Route path="/stats" element={<Statistics />} />
           <Route path="/auth" element={<div />} />
         </Routes>
       </div>

@@ -43,4 +43,18 @@ router.post("/", async (_, res) => {
     }
 });
 
+router.get("/", async (_, res) => {
+    try {
+        let response = await deliveryReceiptModel.find();
+        return res.status(200).json({
+            receipts: response
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: "Error fetching delivery receipts"
+        })
+    }
+
+});
+
 export default router;

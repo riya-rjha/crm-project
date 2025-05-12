@@ -40,9 +40,7 @@ const campaignSchema = new mongoose.Schema({
         ],
         required: true,
     },
-    totSize: Number,
-    deliverySuccess: Number,
-    deliveryFailure: Number,
+    totSize: Number
 }, {
     timestamps: true,
 });

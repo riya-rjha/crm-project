@@ -125,29 +125,29 @@ ul li a:hover {
   height: auto;
 }
 
-.stats {
+.stats, .stats-home {
   position: absolute;
   bottom: 0;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 3rem;
   background-color: #f5f5ff;
   padding-top: 1rem;
 }
 
-.stats .data {
+.stats-home .data {
   text-align: center;
   padding: 1rem;
 }
 
-.stats .data h1 {
+.stats-home .data h1 {
   font-size: 2.5rem;
   color: rgb(0, 0, 155);
 }
 
-.stats .data p {
+.stats-home .data p {
   font-size: 14px;
   color: #555;
   max-width: 250px;
@@ -351,4 +351,34 @@ form input {
   font-weight: bold;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
+}
+
+.statistics {
+  padding: 20px;
+  margin: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics-heading{
+  margin-bottom: 1rem;
+}
+
+.statistics-table {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.statistics-table th,
+.statistics-table td {
+  border: 1px solid #b3d1ff;
+  padding: 10px;
+  text-align: left;
+  background-color: rgb(233, 233, 255);
+}
+
+.pie-chart .pie-set{
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto;
 }
