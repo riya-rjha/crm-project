@@ -6,13 +6,16 @@ import deliveryReceiptModel from "../models/deliveryReceipt.model.js";
 
 const router = express.Router();
 
-router.post("/", async (_, res) => {
+router.post("/", async (req, res) => {
+    const { filteredCustomerIDs } = req.body;
     try {
-        const customers = await customerModel.find();
+        const customers = await customerModel.find(
+            { _id: { $in: filteredCustomerIDs } }
+        );
         const campaigns = await campaignModel.find();
 
-        // console.log(customers)
-        // console.log(campaigns)
+        console.log(customers)
+        console.log(campaigns)
 
         for (const customer of customers) {
             for (const campaign of campaigns) {

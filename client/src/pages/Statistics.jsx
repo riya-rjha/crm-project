@@ -10,6 +10,7 @@ const Statistics = () => {
   const [receipts, setReceipts] = useState([]);
   const [sent, setSent] = useState(0);
   const [fail, setFail] = useState(0);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const getReceipts = async () => {
@@ -28,7 +29,17 @@ const Statistics = () => {
       setFail(failure);
     };
 
+    const generateSummary = async () => {
+      const message = await axios.post("http://localhost:3100/ai", {
+        size: receipts.length,
+        sent,
+        fail,
+      });
+      setMessage(message.summary);
+    };
+
     getReceipts();
+    generateSummary();
   }, []);
 
   const data = {
@@ -67,6 +78,7 @@ const Statistics = () => {
         <>
           <div className="pie-chart">
             <Pie className="pie-set" data={data} options={options} />
+            <p>{message}</p>
           </div>
           <table className="statistics-table">
             <thead>

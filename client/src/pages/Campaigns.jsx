@@ -171,11 +171,11 @@ const Campaigns = () => {
 
     calculateFilteredCustomers(rules, filteredCustomerIDs, filteredCustomers);
 
-    console.log(filteredCustomerIDs);
+    // console.log(filteredCustomerIDs);
     // console.log(filteredCustomers);
     // console.log(rules);
 
-    console.log(filteredCustomerIDs.length);
+    // console.log(filteredCustomerIDs.length);
     let size = filteredCustomerIDs.length;
     setPreviewSize(size);
 
@@ -189,7 +189,13 @@ const Campaigns = () => {
     };
 
     try {
-      await axios.post("http://localhost:3100/api/campaign", payload);
+      await Promise.all([
+        axios.post("http://localhost:3100/api/campaign", payload),
+        axios.post("http://localhost:3100/api/receipt", {
+          filteredCustomerIDs,
+        }),
+      ]);
+
       setShowPopup(true);
       setTimeout(() => {
         window.location.reload();
@@ -384,7 +390,11 @@ const Campaigns = () => {
             Nothing to show here..{" "}
           </span>
           <br />
-          Please proceed on to create a segment & then the customers will be mapped according to the filtration logic provided above and the campaign data will be shown. All campaigns will be ranked in a descending order, meaning the campaign created recently will be shown first.
+          Please proceed on to create a segment & then the customers will be
+          mapped according to the filtration logic provided above and the
+          campaign data will be shown. All campaigns will be ranked in a
+          descending order, meaning the campaign created recently will be shown
+          first.
         </p>
       )}
 
