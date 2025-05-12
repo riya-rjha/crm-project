@@ -5,7 +5,11 @@ const Navbar = () => {
   return (
     <nav>
       <div className="left">
-        <p id="tag">CRM</p>
+        <p id="tag">
+          <Link to="/" style={{ textDecoration: "none", color: "#00009b" }}>
+            CRM
+          </Link>
+        </p>
         <div className="tags">
           <ul>
             <li>

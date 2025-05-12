@@ -326,56 +326,68 @@ const Campaigns = () => {
           </button>
         </div>
       </div>
-      <div className="all-campaigns">
-        <h1 className="campaign-heading">Campaigns</h1>
-        <div className="campaign-grid">
-          {campaigns.toReversed().map((campaign) => (
-            <div className="campaign-card">
-              <p>
-                <span style={{ fontWeight: 600 }}>Created at: </span>{" "}
-                {new Date(campaign.createdAt).toLocaleString()}
-              </p>
-              <p>
-                <span style={{ fontWeight: 600 }}>Audience Size: </span>
-                {campaign.totSize}
-              </p>
-              {campaign.rules.length == 0 ? (
+      {campaigns.length > 0 ? (
+        <div className="all-campaigns">
+          <h1 className="campaign-heading">Campaigns</h1>
+          <div className="campaign-grid">
+            {campaigns.toReversed().map((campaign) => (
+              <div className="campaign-card">
                 <p>
-                  <span style={{ fontWeight: 600 }}>Rules: </span>Not Applicable
+                  <span style={{ fontWeight: 600 }}>Created at: </span>{" "}
+                  {new Date(campaign.createdAt).toLocaleString()}
                 </p>
-              ) : (
-                <>
-                  <p style={{ fontWeight: 600 }}>Rules: </p>
-                  <ul
-                    className="campaign-ul"
-                    style={{ listStyleType: "disc", paddingLeft: "20px" }}
-                  >
-                    {campaign.rules.map((rule, idx) => (
-                      <li>
-                        <span style={{ fontWeight: 600 }}>
-                          {rule.field.charAt(0).toUpperCase() +
-                            rule.field.slice(1)}{" "}
-                        </span>
-                        {getQuery(rule.operator)} {rule.value}
-                        {idx === 0 && campaign.rules.length > 1 ? (
-                          <span> {campaign.operator1}</span>
-                        ) : campaign.rules.length >= 3 ? (
-                          <span> {campaign.operator2}</span>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+                <p>
+                  <span style={{ fontWeight: 600 }}>Audience Size: </span>
+                  {campaign.totSize}
+                </p>
+                {campaign.rules.length == 0 ? (
+                  <p>
+                    <span style={{ fontWeight: 600 }}>Rules: </span>Not
+                    Applicable
+                  </p>
+                ) : (
+                  <>
+                    <p style={{ fontWeight: 600 }}>Rules: </p>
+                    <ul
+                      className="campaign-ul"
+                      style={{ listStyleType: "disc", paddingLeft: "20px" }}
+                    >
+                      {campaign.rules.map((rule, idx) => (
+                        <li>
+                          <span style={{ fontWeight: 600 }}>
+                            {rule.field.charAt(0).toUpperCase() +
+                              rule.field.slice(1)}{" "}
+                          </span>
+                          {getQuery(rule.operator)} {rule.value}
+                          {idx === 0 && campaign.rules.length > 1 ? (
+                            <span> {campaign.operator1}</span>
+                          ) : campaign.rules.length >= 3 ? (
+                            <span> {campaign.operator2}</span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
 
-              <p style={{ marginTop: ".3rem" }}>
-                <span style={{ fontWeight: 600 }}>Message Sent: </span>{" "}
-                {campaign.message}
-              </p>
-            </div>
-          ))}
+                <p style={{ marginTop: ".3rem" }}>
+                  <span style={{ fontWeight: 600 }}>Message Sent: </span>{" "}
+                  {campaign.message}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <p style={{ fontStyle: "italic" }}>
+          <span style={{ fontWeight: 600, color: "green", fontSize: "20px" }}>
+            Nothing to show here..{" "}
+          </span>
+          <br />
+          Please proceed on to create a segment & then the customers will be mapped according to the filtration logic provided above and the campaign data will be shown. All campaigns will be ranked in a descending order, meaning the campaign created recently will be shown first.
+        </p>
+      )}
+
       {showPopup && (
         <div className="popup">
           <p>Previewing Size: (Redirecting in 3 seconds)</p>

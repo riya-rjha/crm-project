@@ -16,7 +16,7 @@ Implement a delivery receipt api, with route /receipt, in that u will have custo
 
 Then on stats page, use the receipt API to see chart of all customers and success and fail for all. (DONE)
 
-3. Statistics Page using Chart.js to show passed and failed
+3. Statistics Page using Chart.js to show passed and failed (DONE)
 4. Send personalized message -> AI Integration of message or send message, and when message is sent to campaign route, implement a personalized message generation for every customer in customers routes based on the overall message, and that customer will have that personalized message
 5. Create a page of Personalized Campaigns and on that show customer and customer details along with the personalized message sent to that customer if for that customer, a message exists meaning that customer has been included in some campaign or the other
 (DONE)

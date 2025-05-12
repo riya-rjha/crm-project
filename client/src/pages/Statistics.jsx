@@ -63,30 +63,44 @@ const Statistics = () => {
     <div className="statistics">
       <h1 className="statistics-heading">Statistics</h1>
 
-      <div className="pie-chart">
-        <Pie className="pie-set" data={data} options={options} />
-      </div>
-
-      <table className="statistics-table">
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Customer Name</th>
-            <th>Message</th>
-            <th>Delivery Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {receipts.map((receipt, idx) => (
-            <tr key={receipt._id}>
-              <td>{idx + 1}</td>
-              <td>{receipt.customerName}</td>
-              <td>{receipt.message}</td>
-              <td>{receipt.deliveryStatus}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {sent != 0 && fail != 0 ? (
+        <>
+          <div className="pie-chart">
+            <Pie className="pie-set" data={data} options={options} />
+          </div>
+          <table className="statistics-table">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Customer Name</th>
+                <th>Message</th>
+                <th>Delivery Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {receipts.map((receipt, idx) => (
+                <tr key={receipt._id}>
+                  <td>{idx + 1}</td>
+                  <td>{receipt.customerName}</td>
+                  <td>{receipt.message}</td>
+                  <td>{receipt.deliveryStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      ) : (
+        <p style={{ fontStyle: "italic" }}>
+          <span style={{ fontWeight: 600, color: "red", fontSize: "20px" }}>
+            Nothing to show here..{" "}
+          </span>
+          <br />
+          Please proceed with the campaigns page to create a campaign and then
+          come back here to view a list of customers and a statistical data of
+          customers who have received the campaign message & the ones who
+          haven't.
+        </p>
+      )}
     </div>
   );
 };

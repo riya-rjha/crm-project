@@ -11,15 +11,15 @@ router.post("/", async (_, res) => {
         const customers = await customerModel.find();
         const campaigns = await campaignModel.find();
 
-        console.log(customers)
-        console.log(campaigns)
+        // console.log(customers)
+        // console.log(campaigns)
 
         for (const customer of customers) {
             for (const campaign of campaigns) {
                 if (campaign.customerIDs.includes(customer._id)) {
-                    console.log("Matched")
+                    // console.log("Matched")
                     const deliveryStatus = calculateDeliveryStatus();
-                    const personalizedMessage = createPersonalizedMessage(customer.name);
+                    const personalizedMessage = await createPersonalizedMessage(customer.name, customer.expenditure, customer.visits, campaign.message);
                     const newDeliveryReceipt = new deliveryReceiptModel({
                         customerID: customer._id,
                         customerName: customer.name,
