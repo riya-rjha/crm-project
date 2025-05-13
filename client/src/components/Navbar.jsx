@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("username");
+    if (storedName) {
+      setUsername(storedName);
+    }
+  }, []);
+
   return (
     <nav>
       <div className="left">
@@ -27,6 +36,14 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+
+      {username && (
+        <div className="right">
+          <p style={{ fontWeight: "600", marginRight: "1rem" }}>
+            Welcome, {username.split(" ")[0]}
+          </p>
+        </div>
+      )}
     </nav>
   );
 };

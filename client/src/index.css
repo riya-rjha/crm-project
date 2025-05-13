@@ -16,6 +16,7 @@ nav {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
   position: sticky;
   top: 0;
+  z-index: 111;
 }
 
 .left {
@@ -123,36 +124,6 @@ ul li a:hover {
 .right-hero img {
   width: 90%;
   height: auto;
-}
-
-.stats,
-.stats-home {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  background-color: #f5f5ff;
-  padding-top: 1rem;
-}
-
-.stats-home .data {
-  text-align: center;
-  padding: 1rem;
-}
-
-.stats-home .data h1 {
-  font-size: 2.5rem;
-  color: rgb(0, 0, 155);
-}
-
-.stats-home .data p {
-  font-size: 14px;
-  color: #555;
-  max-width: 250px;
-  margin: 0 auto;
 }
 
 .left-hero h1 span {
@@ -405,4 +376,58 @@ form input {
   font-weight: 600;
   text-decoration: underline;
   margin-bottom: 10px;
+}
+
+.features {
+  padding: 1rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  text-decoration: underline;
+  text-align: left;
+  color: rgb(0, 0, 155);
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #f7f8ff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+}
+
+.feature-card h3 {
+  color: rgb(0, 0, 155);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.footer {
+  background-color: #231f37;
+  color: #f9fafb;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
 }

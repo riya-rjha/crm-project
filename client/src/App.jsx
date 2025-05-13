@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Customers from "./pages/Customers";
 import Navbar from "./components/Navbar";
 import Campaigns from "./pages/Campaigns";
 import Statistics from "./pages/Statistics";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
 
 const App = () => {
-  const { user, loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { user, loginWithRedirect, isAuthenticated, logout, isLoading } =
+    useAuth0();
   const [username, setUsername] = useState("");
 
   useEffect(() => {
+    if (isLoading) return; // Prevent premature execution
+
     if (isAuthenticated && user) {
       const name = user.name;
       setUsername(name);
@@ -20,7 +22,15 @@ const App = () => {
       setUsername("");
       localStorage.removeItem("username");
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, isLoading]);
+
+  if (isLoading) {
+    return (
+      <p style={{ textAlign: "center", marginTop: "2rem" }}>
+        Loading current page...
+      </p>
+    );
+  }
 
   return (
     <div>
@@ -34,9 +44,12 @@ const App = () => {
                 <div className="hero">
                   <div className="left-hero">
                     <h1>
-                      Presenting The Next-Gen <span>CRM Platform</span>
+                      Presenting The Next-Gen{" "}
+                      <span style={{ textDecoration: "underline" }}>
+                        CRM Platform
+                      </span>
                     </h1>
-                    <p>
+                    <div>
                       <p>
                         A smart and scalable customer engagement tool designed
                         to help your business grow, connect, and convert
@@ -44,11 +57,24 @@ const App = () => {
                         relationships, and drive conversions with personalized,
                         data-driven strategies.
                       </p>
-                    </p>
+                    </div>
                     {isAuthenticated ? (
-                      <button onClick={() => logout()}>Logout</button>
+                      <button
+                        onClick={() => {
+                          logout();
+                          localStorage.removeItem("username");
+                        }}
+                      >
+                        Logout
+                      </button>
                     ) : (
-                      <button onClick={() => loginWithRedirect()}>
+                      <button
+                        onClick={() => {
+                          loginWithRedirect();
+                          window.location.reload();
+                          location.setItem("username", username);
+                        }}
+                      >
                         Authenticate
                       </button>
                     )}
@@ -62,28 +88,52 @@ const App = () => {
                   </div>
                 </div>
 
-                <div className="stats-home">
-                  <div className="customers">
-                    <div className="data">
-                      <h1>200+</h1>
+                <div className="features">
+                  <h2>Platform Features</h2>
+                  <div className="features-list">
+                    <div className="feature-card">
+                      <h3>Customer Segmentation</h3>
+                      <p>
+                        Tailor your marketing strategies with precise customer
+                        grouping.
+                      </p>
+                    </div>
+                    <div className="feature-card">
+                      <h3>Automated Campaigns</h3>
+                      <p>
+                        Schedule and run automated campaigns that drive
+                        engagement.
+                      </p>
+                    </div>
+                    <div className="feature-card">
+                      <h3>Real-time Analytics</h3>
+                      <p>
+                        Get insights on user behavior and campaign performance
+                        instantly.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="features">
+                  <h2>Customer Insights</h2>
+                  <div className="features-list">
+                    <div className="feature-card">
+                      <h3 style={{ fontSize: "3rem" }}>200+</h3>
                       <p>
                         Happy Customers using our CRM to grow their businesses
                         effectively.
                       </p>
                     </div>
-                  </div>
-                  <div className="campaigns">
-                    <div className="data">
-                      <h1>300+</h1>
+                    <div className="feature-card">
+                      <h3 style={{ fontSize: "3rem" }}>300+</h3>
                       <p>
                         Marketing Campaigns created with measurable results and
                         impact.
                       </p>
                     </div>
-                  </div>
-                  <div className="segments-home">
-                    <div className="data">
-                      <h1>40+</h1>
+                    <div className="feature-card">
+                      <h3 style={{ fontSize: "3rem" }}>40+</h3>
                       <p>
                         Customer Segments tailored for precise targeting and
                         conversion.
@@ -91,6 +141,9 @@ const App = () => {
                     </div>
                   </div>
                 </div>
+                <footer class="footer">
+                  &copy; 2025 CRM (Customer relationship Management)
+                </footer>
               </>
             }
           />
