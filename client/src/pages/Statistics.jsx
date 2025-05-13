@@ -37,7 +37,7 @@ const Statistics = () => {
         sent,
         fail,
       });
-      // console.log(message);
+      console.log(message);
       setMessage(message.data.summary);
     };
 
@@ -85,7 +85,7 @@ const Statistics = () => {
         <>
           <h1 className="statistics-heading">Statistics</h1>
 
-          {sent != 0 && fail != 0 ? (
+          {sent != 0 || fail != 0 ? (
             <>
               <div className="pie-chart">
                 <Pie className="pie-set" data={data} options={options} />

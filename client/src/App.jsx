@@ -141,7 +141,7 @@ const App = () => {
                     </div>
                   </div>
                 </div>
-                <footer class="footer">
+                <footer className="footer">
                   &copy; 2025 CRM (Customer relationship Management)
                 </footer>
               </>
