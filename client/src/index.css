@@ -360,6 +360,7 @@ form input {
   text-align: left;
   padding: 20px;
   flex-wrap: wrap;
+  min-height: 400px;
 }
 
 .pie-set {
