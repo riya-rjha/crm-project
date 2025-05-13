@@ -5,6 +5,7 @@ This CRM app enables managers to authenticate via Google, manage customers, crea
 ### 🧑‍💻 Project Setup
 
 For client setup, view this [README](./client/Client_Setup.md).
+
 For server setup, view this [README](./server/Server_Setup.md).
 
 ## Project Approach
@@ -19,6 +20,12 @@ For server setup, view this [README](./server/Server_Setup.md).
 
 5. **AI Integration**: 
 
-**_AI Integration in Campaign Posts & Messages_**: On a successful campaign post, every user in that campaign will be give a personalized AI Generated message through the server side and will be created as a receipt on the delivery backend. The users will have the message based on the campaign message and their field parameters. 
+    - **_AI Integration in Campaign Posts & Messages_**: On a successful campaign post, every user in that campaign will be give a personalized AI Generated message through the server side and will be created as a receipt on the delivery backend. The users will have the message based on the campaign message and their field parameters. 
 
-**_Summary Generation on Segments Page_**: Through Gemini Flash API, a human readable summary insight is created based on the total successful & failed attempts of sending message beside the pie-chart visualization.
+    - **_Summary Generation on Segments Page_**: Through Gemini Flash API, a human readable summary insight is created based on the total successful & failed attempts of sending message beside the pie-chart visualization.
+
+## Possible Limitations
+
+**High DB Load** : Since every request is associated with the request of one another through DB, this can increase the DB Load. Every single API hit triggers an immediate write to the database. This increases the number of DB operations and can slow performance under high load.
+
+**Scalability Issues** : Since there is no usage of a Redis Queue that could possibly help reduce distribution overload, this may lead to scalability issues when multiple users would be working on the same website, sending requests every now and then. 
