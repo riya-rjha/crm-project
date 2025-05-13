@@ -4,15 +4,12 @@ import Customers from "./pages/Customers";
 import Navbar from "./components/Navbar";
 import Campaigns from "./pages/Campaigns";
 import Statistics from "./pages/Statistics";
-import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 
 const App = () => {
   const { user, loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const [username, setUsername] = useState("");
-
-  // console.log(user)
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -40,9 +37,13 @@ const App = () => {
                       Presenting The Next-Gen <span>CRM Platform</span>
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Totam laborum eveniet sunt similique ea nam consequuntur
-                      praesentium. Necessitatibus, sunt labore?
+                      <p>
+                        A smart and scalable customer engagement tool designed
+                        to help your business grow, connect, and convert
+                        effortlessly. Streamline interactions, foster meaningful
+                        relationships, and drive conversions with personalized,
+                        data-driven strategies.
+                      </p>
                     </p>
                     {isAuthenticated ? (
                       <button onClick={() => logout()}>Logout</button>
@@ -66,17 +67,17 @@ const App = () => {
                     <div className="data">
                       <h1>200+</h1>
                       <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Exercitationem, tenetur.
+                        Happy Customers using our CRM to grow their businesses
+                        effectively.
                       </p>
                     </div>
                   </div>
                   <div className="campaigns">
                     <div className="data">
-                      <h1>200+</h1>
+                      <h1>300+</h1>
                       <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Exercitationem, tenetur.
+                        Marketing Campaigns created with measurable results and
+                        impact.
                       </p>
                     </div>
                   </div>
@@ -84,8 +85,8 @@ const App = () => {
                     <div className="data">
                       <h1>40+</h1>
                       <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Exercitationem, tenetur.
+                        Customer Segments tailored for precise targeting and
+                        conversion.
                       </p>
                     </div>
                   </div>

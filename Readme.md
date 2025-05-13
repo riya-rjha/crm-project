@@ -1,22 +1,24 @@
-1. Set up google auth
-2. Make routes to send customers & orders dummy data
-3. Make a campaign history UI component showing (for user that logins)
-    ○ List of past campaigns 
-    ○ Delivery stats (sent, failed, audience size) 
-    ○ Most recent campaign at the top 
-4. Make filter page where all customers are shown as audience segments, use input and search bar
-5. Add audience segments with conditions and in audience selection or segment selection page, all these segments will be shown in a drop down and then on selecting from there, the user will be able to send personalized message
+# CRM App - Client & Server Setup
 
+This CRM app enables managers to authenticate via Google, manage customers, create personalized campaigns, and view message statistics with AI insights.
 
-Remaining:
-1. Google auth
-2. Implement vendor API to calculate success & failure percentage for customerIDs.length and send to campaign, vendor API will be another route and controller which will be a third party app to calculate success & failure random values (DONE)
+### 🧑‍💻 Project Setup
 
-Implement a delivery receipt api, with route /receipt, in that u will have customerID, customer name, campaign id that was passed to it, message that it had and then use AI gemini API to tweak the message according to the name of customer & expenditure, activeDays and visits. That will also have delivery status for that customer. So for every customer, calculate status sent or failed using Mathematical logic.
+For client setup, view this [README](./client/Client_Setup.md).
+For server setup, view this [README](./server/Server_Setup.md).
 
-Then on stats page, use the receipt API to see chart of all customers and success and fail for all. (DONE)
+## Project Approach
 
-3. Statistics Page using Chart.js to show passed and failed (DONE)
-4. Send personalized message -> AI Integration of message or send message, and when message is sent to campaign route, implement a personalized message generation for every customer in customers routes based on the overall message, and that customer will have that personalized message
-5. Create a page of Personalized Campaigns and on that show customer and customer details along with the personalized message sent to that customer if for that customer, a message exists meaning that customer has been included in some campaign or the other
-(DONE)
+1. **Setting up Google Authentication**: I have used Auth0's library to integrate Google account authentication for seamless user authentication, enabling managers to securely sign in to the app using their Google accounts. The managers can add customers, create campaigns or view segments only if they are authorized. Once authorized, the button on Home page changes to Logout and after logging out, the manager won't be able to access the data.
+
+2. **Customer Data Ingestion**: In order to create a CRM app, there needs to be a lot of customers. So, a manager can add customers with 3-4 field parameters, like expenditure, their visits on the website, activeDays etc. 
+
+3. **Campaign Creation**: Through Campaign creation, the manager can make segments of customer data based on query logic. Eg. e.g., spend > INR 10,000 AND visits < 3 OR inactive for 90 days. This data is being sent from client to the server, the manager will enter the value of field and will choose from options like greater than, lesser than or equal to the value. Based on which customers will be filtered and requests will be sent to the backend. The manager will also have to add a message which will be common for all these users.
+
+4. **Segments & Delivery Receipt**: The delivery receipt or statistics page on the client side uses Chart.js to show a visual representation of all users who successfully received the message & those who didn't. This is based through a Vendor API that handles a simple Mathematical logic to handle sent & failed requests. 
+
+5. **AI Integration**: 
+
+**_AI Integration in Campaign Posts & Messages_**: On a successful campaign post, every user in that campaign will be give a personalized AI Generated message through the server side and will be created as a receipt on the delivery backend. The users will have the message based on the campaign message and their field parameters. 
+
+**_Summary Generation on Segments Page_**: Through Gemini Flash API, a human readable summary insight is created based on the total successful & failed attempts of sending message beside the pie-chart visualization.
