@@ -12,6 +12,8 @@ const Statistics = () => {
   const [fail, setFail] = useState(0);
   const [message, setMessage] = useState("");
 
+  const username = localStorage.getItem("username");
+
   useEffect(() => {
     const getReceipts = async () => {
       const response = await axios.get("http://localhost:3100/api/receipt");
@@ -41,7 +43,7 @@ const Statistics = () => {
 
     getReceipts();
     generateSummary();
-  }, []);
+  }, [receipts.length, sent, fail]);
 
   const data = {
     labels: ["Success", "Fail"],
@@ -73,49 +75,59 @@ const Statistics = () => {
 
   return (
     <div className="statistics">
-      <h1 className="statistics-heading">Statistics</h1>
-
-      {sent != 0 && fail != 0 ? (
-        <>
-          <div className="pie-chart">
-            <Pie className="pie-set" data={data} options={options} />
-            <div className="insight-summary">
-              <h3>AI Generated Summary Insights: </h3>
-              <p>{message}</p>
-            </div>
-          </div>
-          <table className="statistics-table">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Customer Name</th>
-                <th>Message</th>
-                <th>Delivery Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {receipts.map((receipt, idx) => (
-                <tr key={receipt._id}>
-                  <td>{idx + 1}</td>
-                  <td>{receipt.customerName}</td>
-                  <td>{receipt.message}</td>
-                  <td>{receipt.deliveryStatus}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      ) : (
-        <p style={{ fontStyle: "italic" }}>
-          <span style={{ fontWeight: 600, color: "red", fontSize: "20px" }}>
-            Nothing to show here..{" "}
-          </span>
-          <br />
-          Please proceed with the campaigns page to create a campaign and then
-          come back here to view a list of customers and a statistical data of
-          customers who have received the campaign message & the ones who
-          haven't.
+      {username == null || username == "" ? (
+        <p>
+          You aren't logged in yet. Go to the Home page and authenticate with
+          your google account to be accepted as a manager & create your
+          campaigns!
         </p>
+      ) : (
+        <>
+          <h1 className="statistics-heading">Statistics</h1>
+
+          {sent != 0 && fail != 0 ? (
+            <>
+              <div className="pie-chart">
+                <Pie className="pie-set" data={data} options={options} />
+                <div className="insight-summary">
+                  <h3>AI Generated Summary Insights: </h3>
+                  <p>{message}</p>
+                </div>
+              </div>
+              <table className="statistics-table">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Customer Name</th>
+                    <th>Message</th>
+                    <th>Delivery Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {receipts.map((receipt, idx) => (
+                    <tr key={receipt._id}>
+                      <td>{idx + 1}</td>
+                      <td>{receipt.customerName}</td>
+                      <td>{receipt.message}</td>
+                      <td>{receipt.deliveryStatus}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <p style={{ fontStyle: "italic" }}>
+              <span style={{ fontWeight: 600, color: "red", fontSize: "20px" }}>
+                Nothing to show here..{" "}
+              </span>
+              <br />
+              Please proceed with the campaigns page to create a campaign and
+              then come back here to view a list of customers and a statistical
+              data of customers who have received the campaign message & the
+              ones who haven't.
+            </p>
+          )}
+        </>
       )}
     </div>
   );

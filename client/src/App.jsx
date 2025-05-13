@@ -4,8 +4,27 @@ import Customers from "./pages/Customers";
 import Navbar from "./components/Navbar";
 import Campaigns from "./pages/Campaigns";
 import Statistics from "./pages/Statistics";
+import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useState, useEffect } from "react";
 
 const App = () => {
+  const { user, loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const [username, setUsername] = useState("");
+
+  // console.log(user)
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const name = user.name;
+      setUsername(name);
+      localStorage.setItem("username", name);
+    } else {
+      setUsername("");
+      localStorage.removeItem("username");
+    }
+  }, [isAuthenticated, user]);
+
   return (
     <div>
       <div className="landing-page">
@@ -25,9 +44,13 @@ const App = () => {
                       Totam laborum eveniet sunt similique ea nam consequuntur
                       praesentium. Necessitatibus, sunt labore?
                     </p>
-                    <a href="/auth">
-                      <button>Authenticate</button>
-                    </a>
+                    {isAuthenticated ? (
+                      <button onClick={() => logout()}>Logout</button>
+                    ) : (
+                      <button onClick={() => loginWithRedirect()}>
+                        Authenticate
+                      </button>
+                    )}
                   </div>
                   <div className="right-hero">
                     <img
@@ -73,7 +96,6 @@ const App = () => {
           <Route path="/customers" element={<Customers />} />
           <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/stats" element={<Statistics />} />
-          <Route path="/auth" element={<div />} />
         </Routes>
       </div>
     </div>
