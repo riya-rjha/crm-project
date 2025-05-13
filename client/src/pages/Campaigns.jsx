@@ -22,7 +22,7 @@ const Campaigns = () => {
   useEffect(() => {
     const getCustomers = async () => {
       try {
-        const res = await axios.get("http://localhost:3100/api/customer");
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/customer`);
         setCustomers(res.data.allCustomers);
       } catch (error) {
         console.log(error.message);
@@ -30,7 +30,7 @@ const Campaigns = () => {
     };
 
     const getCampaigns = async () => {
-      const res = await axios.get("http://localhost:3100/api/campaign");
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/campaign`);
       //   console.log(res);
       setCampaigns(res.data.campaigns);
     };
@@ -193,8 +193,8 @@ const Campaigns = () => {
 
     try {
       await Promise.all([
-        axios.post("http://localhost:3100/api/campaign", payload),
-        axios.post("http://localhost:3100/api/receipt", {
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/api/campaign`, payload),
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/api/receipt`, {
           filteredCustomerIDs,
         }),
       ]);

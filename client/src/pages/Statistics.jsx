@@ -16,7 +16,7 @@ const Statistics = () => {
 
   useEffect(() => {
     const getReceipts = async () => {
-      const response = await axios.get("http://localhost:3100/api/receipt");
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/receipt`);
       const receiptsFetched = response.data.receipts;
       setReceipts(receiptsFetched);
 
@@ -32,7 +32,7 @@ const Statistics = () => {
     };
 
     const generateSummary = async () => {
-      const message = await axios.post("http://localhost:3100/ai", {
+      const message = await axios.post(`${import.meta.env.VITE_SERVER_URL}/ai`, {
         size: receipts.length,
         sent,
         fail,

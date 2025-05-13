@@ -13,7 +13,7 @@ const Customers = () => {
   useEffect(() => {
     const getCustomers = async () => {
       try {
-        const res = await axios.get("http://localhost:3100/api/customer");
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/customer`);
         setCustomers(res.data.allCustomers);
       } catch (error) {
         console.log(error.message);
@@ -24,7 +24,7 @@ const Customers = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:3100/api/customer", {
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/customer`, {
         name,
         expenditure,
         visits,
